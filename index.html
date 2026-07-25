@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visor del Agrimensor v2.0</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="panel">
+      <h2>🧭 Visor del Agrimensor</h2>
+
+      <div class="grupo-control">
+        <label>Capa base:</label>
+        <select id="selector-capa">
+          <option value="osm">🗺️ OpenStreetMap</option>
+          <option value="satelite">🛰️ Satelital Esri</option>
+        </select>
+      </div>
+
+      <p class="instrucciones">
+        Clic = vértice · Doble clic = cerrar · Arrastrar marcador = editar
+      </p>
+
+      <div class="metricas">
+        <div class="fila-metrica">
+          <span>Vértices:</span>
+          <strong id="contador-puntos">0</strong>
+        </div>
+        <div class="fila-metrica">
+          <span>Perímetro:</span>
+          <strong id="resultado-perimetro">0 m</strong>
+        </div>
+        <div class="fila-metrica">
+          <span>Superficie:</span>
+          <strong id="resultado-area">0 m²</strong>
+        </div>
+        <div class="fila-metrica">
+          <span>Superficie:</span>
+          <strong id="resultado-hectareas">0 ha</strong>
+        </div>
+      </div>
+
+      <div class="botonera">
+        <button id="btn-ubicacion" class="btn-azul">📍 Mi ubicación</button>
+        <button id="btn-deshacer" class="btn-secundario" disabled>
+          ↩️ Deshacer
+        </button>
+        <button id="btn-reiniciar" class="btn-peligro">🗑️ Reiniciar</button>
+        <button id="btn-exportar" class="btn-exito" disabled>
+          📥 Exportar CSV
+        </button>
+      </div>
+
+      <div id="tabla-container">
+        <h3>📋 Tabla de Vértices</h3>
+        <div class="tabla-wrapper">
+          <table id="tabla-vertices">
+            <thead>
+              <tr>
+                <th>Vértice</th>
+                <th>Latitud</th>
+                <th>Longitud</th>
+                <th>Dist. sig. (m)</th>
+                <th>Rumbo</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="mapa"></div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="app.js"></script>
+  </body>
+</html>
