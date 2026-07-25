@@ -286,3 +286,23 @@ export function inicializarBotones() {
 function guardarEnStorage() {
   guardar(parcelas.getParcelas(), parcelas.getActivaId());
 }
+
+// Toggle panel en mobile
+const btnToggle = document.getElementById("btn-toggle-panel");
+const panel = document.getElementById("panel");
+
+if (btnToggle && panel) {
+  btnToggle.addEventListener("click", () => {
+    panel.classList.toggle("abierto");
+    // Cambiar icono
+    btnToggle.innerHTML = panel.classList.contains("abierto") ? "✕" : "☰";
+  });
+
+  // Cerrar panel al hacer clic en el mapa (solo en mobile)
+  mapa.on("click", () => {
+    if (window.innerWidth <= 768 && panel.classList.contains("abierto")) {
+      panel.classList.remove("abierto");
+      btnToggle.innerHTML = "☰";
+    }
+  });
+}

@@ -2,7 +2,10 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>Visor del Agrimensor v3.3 — Modular</title>
     <!-- Elimina el 404 de favicon.ico -->
     <link rel="icon" href="data:," />
@@ -93,6 +96,14 @@
     </div>
 
     <div id="mapa"></div>
+
+    <button
+      id="btn-toggle-panel"
+      class="btn-toggle-mobile"
+      aria-label="Abrir panel"
+    >
+      ☰
+    </button>
 
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"

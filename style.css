@@ -13,14 +13,14 @@ body {
   background: #1a1a2e;
 }
 
-body {
-  display: flex;
-  flex-direction: row;
-}
-
+/* ============================================
+DESKTOP (> 768px)
+   ============================================ */
 #panel {
+  position: fixed;
+  left: 0;
+  top: 0;
   width: 340px;
-  min-width: 340px;
   height: 100vh;
   background: #ffffff;
   box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
@@ -33,6 +33,106 @@ body {
   overflow-x: hidden;
 }
 
+#mapa {
+  position: fixed;
+  top: 0;
+  left: 340px;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+/* ============================================
+DESKTOP (> 768px) — botón oculto SIEMPRE
+   ============================================ */
+.btn-toggle-mobile {
+  display: none !important; /* Nunca aparece en desktop */
+}
+
+/* ============================================
+MOBILE (<= 768px) — botón visible
+   ============================================ */
+@media (max-width: 768px) {
+  .btn-toggle-mobile {
+    display: flex !important;
+    position: fixed;
+    top: max(16px, env(safe-area-inset-top, 0px) + 8px);
+    right: 12px; /* Derecha, donde ahora está libre el zoom */
+    left: auto;
+    z-index: 2001;
+    width: 42px;
+    height: 42px;
+    background: #e94560;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* ============================================
+MOBILE (<= 768px) — Drawer lateral
+   ============================================ */
+@media (max-width: 768px) {
+  #panel {
+    width: 85%;
+    max-width: 320px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.4);
+  }
+
+  #panel.abierto {
+    transform: translateX(0);
+  }
+
+  #mapa {
+    left: 0;
+    width: 100%;
+    height: 100vh;
+  }
+
+  .btn-toggle-mobile {
+    display: block;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 2001;
+    width: 44px;
+    height: 44px;
+    background: #e94560;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Cuando el panel está abierto, el botón se mueve a la derecha */
+  #panel.abierto ~ .btn-toggle-mobile,
+  body.panel-abierto .btn-toggle-mobile {
+    left: calc(85% + 8px);
+    background: #2c3e50;
+  }
+}
+@media (max-width: 768px) {
+  .leaflet-control-zoom {
+    margin-top: 70px !important; /* Deja espacio arriba para tu botón */
+  }
+}
+/* ============================================
+RESTO DE ESTILOS (sin cambios)
+   ============================================ */
 h2 {
   color: #1a1a2e;
   font-size: 1.2rem;
@@ -40,7 +140,6 @@ h2 {
   padding-bottom: 8px;
 }
 
-/* Sección Parcelas */
 .seccion-parcelas {
   background: #f8f9fa;
   border-radius: 8px;
@@ -132,12 +231,10 @@ input[type="file"] {
 .fila-metrica span {
   color: #555;
 }
-
 .fila-metrica strong {
   color: #27ae60;
   font-size: 1rem;
 }
-
 .utm-badge strong {
   color: #8e44ad;
   font-size: 0.85rem;
@@ -177,7 +274,6 @@ button {
 .btn-azul:hover {
   background: #2980b9;
 }
-
 .btn-secundario {
   background: #f39c12;
   color: white;
@@ -185,7 +281,6 @@ button {
 .btn-secundario:hover {
   background: #d35400;
 }
-
 .btn-peligro {
   background: #e74c3c;
   color: white;
@@ -193,7 +288,6 @@ button {
 .btn-peligro:hover {
   background: #c0392b;
 }
-
 .btn-exito {
   background: #27ae60;
   color: white;
@@ -207,15 +301,6 @@ button:disabled {
   cursor: not-allowed;
 }
 
-#mapa {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 340px; /* ancho del panel */
-  z-index: 1;
-}
-
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -225,28 +310,4 @@ button:disabled {
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 3px;
-}
-
-@media (max-width: 768px) {
-  body {
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-  }
-  #panel {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 340px;
-    height: 100vh;
-    max-height: 50vh;
-    min-width: auto;
-  }
-  #mapa {
-    flex: 1 1 auto;
-    min-width: 0;
-    min-height: 0; /* ← esto es clave en flex */
-    height: 100vh;
-    position: relative;
-  }
 }

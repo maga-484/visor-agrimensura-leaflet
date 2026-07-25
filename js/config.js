@@ -3,9 +3,12 @@
 // ============================================
 
 export const mapa = L.map("mapa", {
-  zoomControl: true,
+  zoomControl: false, // Desactivamos el default
   attributionControl: true,
 }).setView([-34.6037, -58.3816], 13);
+
+// Zoom a la derecha, donde no hay nada
+L.control.zoom({ position: "topright" }).addTo(mapa);
 
 window.addEventListener("load", () => mapa.invalidateSize());
 setTimeout(() => mapa.invalidateSize(), 300);
