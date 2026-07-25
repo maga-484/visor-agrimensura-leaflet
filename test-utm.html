@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Test UTM — Visor del Agrimensor</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        padding: 40px;
+        background: #1a1a2e;
+        color: white;
+      }
+      .test {
+        background: #2c3e50;
+        padding: 20px;
+        margin: 10px 0;
+        border-radius: 8px;
+      }
+      .pass {
+        border-left: 5px solid #27ae60;
+      }
+      .fail {
+        border-left: 5px solid #e74c3c;
+      }
+      h1 {
+        color: #e94560;
+      }
+      h2 {
+        color: #f39c12;
+        font-size: 1rem;
+        margin-bottom: 20px;
+      }
+      code {
+        background: #1a1a2e;
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+      .norma {
+        background: #1e3a5f;
+        padding: 12px 16px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        border-left: 4px solid #3498db;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🧪 Tests UTM — Visor del Agrimensor</h1>
+
+    <div class="norma">
+      <strong>📋 Norma de referencia:</strong> Provincia de Buenos Aires —
+      Tolerancia máxima admitida: <strong>5%</strong> de la superficie.
+    </div>
+
+    <div id="resultados"></div>
+
+    <script type="module">
+      import { calcularAreaUTM } from "./js/utm.js";
+
+      const resultados = document.getElementById("resultados");
+
+      function test(nombre, coords, esperado) {
+        const area = calcularAreaUTM(coords);
+        const error = Math.abs(area - esperado);
+        const errorPorcentaje = (error / esperado) * 100;
+        const tolerancia = 5.0; // 5% norma Bs.As.
+        const pass = errorPorcentaje <= tolerancia;
+
+        const div = document.createElement("div");
+        div.className = `test ${pass ? "pass" : "fail"}`;
+        div.innerHTML = `
+                <h3>${pass ? "✅" : "❌"} ${nombre}</h3>
+                <p>Área calculada: <code>${area.toLocaleString("es-AR", { maximumFractionDigits: 2 })} m²</code></p>
+                <p>Área esperada: <code>${esperado.toLocaleString("es-AR", { maximumFractionDigits: 2 })} m²</code></p>
+                <p>Error: <code>${error.toFixed(2)} m²</code> — <strong>${errorPorcentaje.toFixed(3)}%</strong></p>
+                <p>Límite norma: <code>${tolerancia}%</code> ${pass ? "(dentro de tolerancia)" : "(EXCEDE tolerancia)"}</p>
+            `;
+        resultados.appendChild(div);
+      }
+
+      // Test 1: Lote urbano ~450 m² (frente 15m × fondo 30m)
+      const loteUrbano = [
+        { lat: -34.6037, lng: -58.3816 },
+        { lat: -34.6037, lng: -58.381465 }, // ~15m al este
+        { lat: -34.60397, lng: -58.381465 }, // ~30m al sur
+        { lat: -34.60397, lng: -58.3816 },
+      ];
+      test("Lote urbano ~15m × 30m = 450 m²", loteUrbano, 450);
+
+      // Test 2: Manzana urbana ~100m × 100m = 10.000 m²
+      const manzana = [
+        { lat: -34.6037, lng: -58.3816 },
+        { lat: -34.6037, lng: -58.3805 }, // ~100m al este
+        { lat: -34.6046, lng: -58.3805 }, // ~100m al sur
+        { lat: -34.6046, lng: -58.3816 },
+      ];
+      test("Manzana urbana ~100m × 100m = 10.000 m²", manzana, 10000);
+
+      // Test 3: Campo rural ~1 hectárea = 10.000 m²
+      const unaHectarea = [
+        { lat: -36.5, lng: -60.0 },
+        { lat: -36.5, lng: -59.9989 },
+        { lat: -36.5009, lng: -59.9989 },
+        { lat: -36.5009, lng: -60.0 },
+      ];
+      test("Campo rural ~1 ha = 10.000 m²", unaHectarea, 10000);
+
+      // Test 4: Campo rural ~10 hectáreas = 100.000 m²
+      // 0.01° lat ≈ 1.111m, 0.01° lng a -36.5° ≈ 892m → ~1.000m × 100m no, ajustemos
+      // Para 10 ha necesitamos ~316m × 316m o 100m × 1.000m
+      const diezHectareas = [
+        { lat: -36.5, lng: -60.0 },
+        { lat: -36.5, lng: -59.9887 }, // ~1.000m al este
+        { lat: -36.509, lng: -59.9887 }, // ~1.000m al sur
+        { lat: -36.509, lng: -60.0 },
+      ];
+      test("Campo rural ~10 ha = 100.000 m²", diezHectareas, 100000);
+
+      // Test 5: Triángulo irregular (linderos reales)
+      const triangulo = [
+        { lat: -34.6037, lng: -58.3816 },
+        { lat: -34.6037, lng: -58.3805 }, // ~100m
+        { lat: -34.60415, lng: -58.3816 }, // ~50m al sur
+      ];
+      test("Triángulo irregular ~100m × 50m / 2 = 2.500 m²", triangulo, 2500);
+
+      console.log("Tests UTM completados con norma del 5%");
+    </script>
+  </body>
+</html>

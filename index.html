@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Visor del Agrimensor v2.0</title>
+    <title>Visor del Agrimensor v3.3 — Modular</title>
+    <!-- Elimina el 404 de favicon.ico -->
+    <link rel="icon" href="data:," />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -17,33 +19,47 @@
       <h2>🧭 Visor del Agrimensor</h2>
 
       <div class="grupo-control">
-        <label>Capa base:</label>
+        <label for="selector-capa">Capa base:</label>
         <select id="selector-capa">
           <option value="osm">🗺️ OpenStreetMap</option>
-          <option value="satelite">🛰️ Satelital Esri</option>
+          <option value="hot">🗺️ OSM Humanitario (Urbano)</option>
+          <option value="voyager">🗺️ CartoDB Voyager (Urbano)</option>
+          <option value="satelite">🛰️ Esri Satelital</option>
         </select>
       </div>
 
+      <div class="seccion-parcelas">
+        <h3>📍 Parcelas / Mis áreas de trabajo</h3>
+        <div class="grupo-control">
+          <label for="selector-parcela">Parcela activa:</label>
+          <select id="selector-parcela"></select>
+        </div>
+        <div class="botonera-compacta">
+          <button id="btn-nueva" class="btn-exito">➕ Nueva</button>
+          <button id="btn-renombrar" class="btn-secundario">✏️</button>
+          <button id="btn-eliminar" class="btn-peligro">🗑️</button>
+        </div>
+      </div>
+
       <p class="instrucciones">
-        Clic = vértice · Doble clic = cerrar · Arrastrar marcador = editar
+        Clic = vértice · Doble clic = cerrar · Arrastrar = editar
       </p>
 
       <div class="metricas">
         <div class="fila-metrica">
-          <span>Vértices:</span>
-          <strong id="contador-puntos">0</strong>
+          <span>Vértices:</span><strong id="contador-puntos">0</strong>
         </div>
         <div class="fila-metrica">
-          <span>Perímetro:</span>
-          <strong id="resultado-perimetro">0 m</strong>
+          <span>Perímetro:</span><strong id="resultado-perimetro">0 m</strong>
         </div>
         <div class="fila-metrica">
-          <span>Superficie:</span>
-          <strong id="resultado-area">0 m²</strong>
+          <span>Superficie:</span><strong id="resultado-area">0 m²</strong>
         </div>
         <div class="fila-metrica">
-          <span>Superficie:</span>
-          <strong id="resultado-hectareas">0 ha</strong>
+          <span>Superficie:</span><strong id="resultado-hectareas">0 ha</strong>
+        </div>
+        <div class="fila-metrica utm-badge">
+          <span>Proyección:</span><strong>UTM exacta (WGS84)</strong>
         </div>
       </div>
 
@@ -52,28 +68,27 @@
         <button id="btn-deshacer" class="btn-secundario" disabled>
           ↩️ Deshacer
         </button>
-        <button id="btn-reiniciar" class="btn-peligro">🗑️ Reiniciar</button>
+        <button id="btn-reiniciar" class="btn-peligro">
+          🗑️ Limpiar parcela
+        </button>
         <button id="btn-exportar" class="btn-exito" disabled>
           📥 Exportar CSV
         </button>
       </div>
 
-      <div id="tabla-container">
-        <h3>📋 Tabla de Vértices</h3>
-        <div class="tabla-wrapper">
-          <table id="tabla-vertices">
-            <thead>
-              <tr>
-                <th>Vértice</th>
-                <th>Latitud</th>
-                <th>Longitud</th>
-                <th>Dist. sig. (m)</th>
-                <th>Rumbo</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
+      <div class="grupo-control import-zone">
+        <label for="input-import">📂 Importar coordenadas (colegas):</label>
+        <input
+          type="file"
+          id="input-import"
+          accept=".csv,.txt,.kml,.json,.geojson,.gpx,.zip,.wkt"
+        />
+        <small
+          >Formatos:
+          <strong
+            >CSV, KML, GeoJSON, GPX, SHP (.zip), WKT, TopoJSON</strong
+          ></small
+        >
       </div>
     </div>
 
@@ -84,6 +99,8 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="app.js"></script>
+    <script src="https://unpkg.com/shpjs@4.0.4/dist/shp.js"></script>
+    <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+    <script type="module" src="js/app.js"></script>
   </body>
 </html>
