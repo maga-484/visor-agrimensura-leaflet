@@ -113,17 +113,15 @@ http://localhost:3000/test-utm.html
 
 ## 📥 Formatos de importación | Import Formats | 导入格式
 
-| Formato  | Extensión           | Notas                                    |
-| -------- | ------------------- | ---------------------------------------- |
-| CSV      | `.csv`              | Últimas 2 columnas: Latitud, Longitud    |
-| KML      | `.kml`              | Extrae coordenadas de `<coordinates>`    |
-| GeoJSON  | `.json`, `.geojson` | Polygon, MultiPolygon, LineString, Point |
-| GPX      | `.gpx`              | Track points, waypoints, route points    |
-| SHP      | `.zip`              | Shapefile comprimido (usa shpjs)         |
-| WKT      | `.wkt`, `.txt`      | POLYGON, MULTIPOLYGON, LINESTRING        |
-| TopoJSON | `.json`             | Conversión automática a GeoJSON          |
-
----
+| Formato  | Extensión           | Notas                                    | Notes                               | 备注                      |
+| -------- | ------------------- | ---------------------------------------- | ----------------------------------- | ------------------------- |
+| CSV      | `.csv`              | Últimas 2 columnas: Latitud, Longitud    | Last 2 columns: Latitude, Longitude | 最后两列：纬度、经度      |
+| KML      | `.kml`              | Extrae coordenadas de `<coordinates>`    | Extracts `<coordinates>` tags       | 提取 `<coordinates>` 标签 |
+| GeoJSON  | `.json`, `.geojson` | Polygon, MultiPolygon, LineString, Point | Same geometry types                 | 多边形、多多边形、线、点  |
+| GPX      | `.gpx`              | Track points, waypoints, route points    | Tracks, waypoints, routes           | 轨迹点、航点、路线点      |
+| SHP      | `.zip`              | Shapefile comprimido (usa shpjs)         | Zipped shapefile (uses shpjs)       | 压缩的 Shapefile (shpjs)  |
+| WKT      | `.wkt`, `.txt`      | POLYGON, MULTIPOLYGON, LINESTRING        | WKT plain text                      | WKT 纯文本                |
+| TopoJSON | `.json`             | Conversión automática a GeoJSON          | Auto-converts to GeoJSON            | 自动转换为 GeoJSON        |
 
 ## 🗺️ Hoja de ruta | Roadmap | 路线图
 
