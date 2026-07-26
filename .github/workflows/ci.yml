@@ -19,20 +19,28 @@ jobs:
           node-version: 20
 
       - name: Install Playwright
-        run: npx playwright install chromium
+        run: npm install playwright
 
-      - name: Install ESLint
-        run: npm install -g eslint
+      - name: Install Chromium
+        run: npx playwright install chromium
 
       - name: Lint JS modules
         run: |
-          eslint js/ --ext .js || true
+          npm install -g eslint
+          eslint js/
         continue-on-error: true
 
       - name: Start static server
         run: |
-          npx serve . -l 3000 &
-          npx wait-on http://localhost:3000 --timeout 30000
+          python3 -m http.server 3000 &
+          sleep 2
 
-      - name: Run UTM tests (headless)
+      - name: Run UTM tests
         run: node scripts/run-tests.mjs
+
+      - name: Upload screenshot on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-failure-screenshot
+          path: test-fail.png
