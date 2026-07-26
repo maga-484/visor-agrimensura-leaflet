@@ -14,7 +14,7 @@ body {
 }
 
 /* ============================================
-DESKTOP (> 768px)
+   DESKTOP (> 768px)
    ============================================ */
 #panel {
   position: fixed;
@@ -42,42 +42,12 @@ DESKTOP (> 768px)
   z-index: 1;
 }
 
-/* ============================================
-DESKTOP (> 768px) — botón oculto SIEMPRE
-   ============================================ */
 .btn-toggle-mobile {
-  display: none !important; /* Nunca aparece en desktop */
+  display: none !important;
 }
 
 /* ============================================
-MOBILE (<= 768px) — botón visible
-   ============================================ */
-@media (max-width: 768px) {
-  .btn-toggle-mobile {
-    display: flex !important;
-    position: fixed;
-    top: max(16px, env(safe-area-inset-top, 0px) + 8px);
-    right: 12px; /* Derecha, donde ahora está libre el zoom */
-    left: auto;
-    z-index: 2001;
-    width: 42px;
-    height: 42px;
-    background: #e94560;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
-    align-items: center;
-    justify-content: center;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-}
-
-/* ============================================
-MOBILE (<= 768px) — Drawer lateral
+   MOBILE (<= 768px)
    ============================================ */
 @media (max-width: 768px) {
   #panel {
@@ -94,44 +64,71 @@ MOBILE (<= 768px) — Drawer lateral
 
   #mapa {
     left: 0;
-    width: 100%;
+    right: 0;
+    width: auto;
     height: 100vh;
   }
 
   .btn-toggle-mobile {
-    display: block;
+    display: flex !important;
     position: fixed;
-    top: 12px;
-    left: 12px;
+    top: max(16px, env(safe-area-inset-top, 0px) + 8px);
+    right: 12px;
+    left: auto;
     z-index: 2001;
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     background: #e94560;
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1.3rem;
+    border-radius: 10px;
+    font-size: 1.2rem;
     cursor: pointer;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    display: flex;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
     align-items: center;
     justify-content: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  /* Cuando el panel está abierto, el botón se mueve a la derecha */
-  #panel.abierto ~ .btn-toggle-mobile,
-  body.panel-abierto .btn-toggle-mobile {
-    left: calc(85% + 8px);
+  #panel.abierto ~ .btn-toggle-mobile {
+    right: calc(85% + 8px);
     background: #2c3e50;
   }
-}
-@media (max-width: 768px) {
+
   .leaflet-control-zoom {
-    margin-top: 70px !important; /* Deja espacio arriba para tu botón */
+    margin-top: 70px !important;
   }
 }
+
 /* ============================================
-RESTO DE ESTILOS (sin cambios)
+   SELECTOR DE IDIOMA
+   ============================================ */
+.lang-selector {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.lang-btn {
+  flex: 1;
+  padding: 6px;
+  font-size: 0.8rem;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.lang-btn.active {
+  background: #e94560;
+  color: white;
+  border-color: #e94560;
+}
+
+/* ============================================
+   RESTO DE ESTILOS
    ============================================ */
 h2 {
   color: #1a1a2e;

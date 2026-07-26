@@ -3,12 +3,9 @@
 // ============================================
 
 export const mapa = L.map("mapa", {
-  zoomControl: false, // Desactivamos el default
+  zoomControl: false,
   attributionControl: true,
 }).setView([-34.6037, -58.3816], 13);
-
-// Zoom a la derecha, donde no hay nada
-L.control.zoom({ position: "topright" }).addTo(mapa);
 
 window.addEventListener("load", () => mapa.invalidateSize());
 setTimeout(() => mapa.invalidateSize(), 300);
@@ -64,13 +61,14 @@ export const capaSatelite = L.tileLayer(
   },
 );
 
-// Capa por defecto
 capaOSM.addTo(mapa);
+
+// Zoom a la derecha
+L.control.zoom({ position: "topright" }).addTo(mapa);
 
 // Barra de escala métrica
 L.control
   .scale({ metric: true, imperial: false, position: "bottomright" })
   .addTo(mapa);
 
-// Todas las capas en un array para facilitar el switch
 export const TODAS_LAS_CAPAS = [capaOSM, capaHOT, capaVoyager, capaSatelite];
