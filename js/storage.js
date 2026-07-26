@@ -19,7 +19,7 @@ export function cargar() {
     try {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) parcelas = parsed;
-    } catch (e) {
+    } catch (_e) {
       parcelas = [];
     }
   }
