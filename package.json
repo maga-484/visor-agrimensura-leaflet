@@ -1,0 +1,24 @@
+{
+  "name": "57",
+  "version": "1.0.0",
+  "description": "readme = \"\"\"# 🧭 Visor del Agrimensor | Surveyor's Viewer | 测量员视图",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maga-484/visor-agrimensura-leaflet.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/maga-484/visor-agrimensura-leaflet/issues"
+  },
+  "homepage": "https://github.com/maga-484/visor-agrimensura-leaflet#readme",
+  "dependencies": {
+    "playwright": "^1.62.0"
+  }
+}

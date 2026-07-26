@@ -1,0 +1,38 @@
+name: CI — Tests UTM + Lint
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Playwright
+        run: npx playwright install chromium
+
+      - name: Install ESLint
+        run: npm install -g eslint
+
+      - name: Lint JS modules
+        run: |
+          eslint js/ --ext .js || true
+        continue-on-error: true
+
+      - name: Start static server
+        run: |
+          npx serve . -l 3000 &
+          npx wait-on http://localhost:3000 --timeout 30000
+
+      - name: Run UTM tests (headless)
+        run: node scripts/run-tests.mjs
