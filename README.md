@@ -1,4 +1,4 @@
-readme = """# 🧭 Visor del Agrimensor | Surveyor's Viewer | 测量员视图
+# 🧭 Visor del Agrimensor | Surveyor's Viewer | 测量员视图
 
 > Herramienta web interactiva para delimitar parcelas, calcular perímetros y superficies con proyección UTM exacta (WGS84), y exportar datos catastrales — directamente desde el navegador, sin backend.
 
@@ -153,9 +153,3 @@ MIT © 2026 — [maga-484](https://github.com/maga-484)
 > _"I didn't build a generic CRUD. I built a tool that solves a problem I experienced as a surveyor: calculating areas with cadastral precision in the field, without proprietary software."_
 >
 > _"我没有做一个通用的CRUD。我做了一个解决我作为测量员在实际工作中遇到的问题的工具：在野外以地籍精度计算面积，无需专有软件。"_
-> """
-
-with open('/mnt/agents/output/README.md', 'w', encoding='utf-8') as f:
-f.write(readme)
-
-print("README.md generado correctamente.")
